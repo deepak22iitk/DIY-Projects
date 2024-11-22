@@ -14,7 +14,8 @@
  7. License
 
 ** Project Overview**
- This project involves fine-tuning GPT-2, a pre-trained language model, on custom datasets.
+
+This project involves fine-tuning GPT-2, a pre-trained language model, on custom datasets.
  The model is trained to generate responses that could be used in a voice assistant
  application. GPT-2's capabilities allow it to generate coherent, context-aware text, making it
  suitable for dialogue-based tasks such as chatbots, virtual assistants, or interactive systems.
@@ -22,9 +23,13 @@
  The training process includes:
    
  a. Data preprocessing and tokenization.
+ 
  b. Fine-tuning the GPT-2 model on the custom dataset.
+ 
  c. Setting up the training loop using Hugging Face's transformers library.
+ 
  d. Evaluating the model's performance.
+ 
  
 ****Installation Instructions****
 **Step 1: Install Dependencies** --->>>
@@ -99,26 +104,46 @@ We use the pre-trained GPT-2 model from Hugging Face’s model hub and fine-tune
  
  from transformers import GPT2LMHeadModel, GPT2Tokenizer, Trainer, TrainingArguments
  tokenizer = GPT2Tokenizer.from_pretrained("gpt2")
+ 
  model = GPT2LMHeadModel.from_pretrained("gpt2")
+ 
  training_args = TrainingArguments(
+ 
  output_dir="./results",
+ 
  num_train_epochs=3,
+ 
  per_device_train_batch_size=4,
+ 
  per_device_eval_batch_size=4,
+ 
  save_steps=1000,
+ 
  eval_steps=1000,
+ 
  logging_dir="./logs",
+
  logging_steps=100,
+ 
  evaluation_strategy="epoch",
+ 
  load_best_model_at_end=True,
  )
+ 
  trainer = Trainer(
+ 
  model=model,
+ 
  args=training_args,
+ 
  train_dataset=train_dataset,
+ 
  eval_dataset=test_dataset,
+ 
  tokenizer=tokenizer,
+ 
  data_collator=DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False),
+ 
  )
  
  **Step 3: Train the Model**
@@ -132,12 +157,15 @@ We use the pre-trained GPT-2 model from Hugging Face’s model hub and fine-tune
  the logs.
 
  **Step 4: Save the Model**
+ 
  The trained model will be saved in the 
- output_dir specified in the 
- TrainingArguments . You can then load the model later for inference or further fine-tuning.
+ output_dir specified in the TrainingArguments . 
+ You can then load the model later for inference or further fine-tuning.
  
  python
+ 
  model.save_pretrained("./gpt2_finetuned")
+ 
  tokenizer.save_pretrained("./gpt2_finetuned")
  
  **Usage**
@@ -151,19 +179,26 @@ We use the pre-trained GPT-2 model from Hugging Face’s model hub and fine-tune
  # Load the fine-tuned model and tokenizer
  
  model = GPT2LMHeadModel.from_pretrained("./gpt2_finetuned")
+ 
  tokenizer = GPT2Tokenizer.from_pretrained("./gpt2_finetuned")
  
  # Generate a response to a prompt
+ 
  prompt = "What is the capital of France?"
+ 
  inputs = tokenizer.encode(prompt, return_tensors="pt")
+ 
  outputs = model.generate(inputs, max_length=50, num_return_sequences=1)
  
  # Decode the response
  response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+ 
  print(response)
+ 
  This code generates a response to the input prompt using the fine-tuned model.
  
 **Future Work**
+
 Data Augmentation: Improve the dataset by adding more diverse interactions and
  scenarios.
  Model Optimization: Experiment with smaller versions of GPT, such as GPT-2 small, for
@@ -172,6 +207,7 @@ Data Augmentation: Improve the dataset by adding more diverse interactions and
 time interaction.
 
  **License**
+ 
  This project is licensed under the MIT License - see the LICENSE file for details.
  This README outlines the necessary steps to set up and use your GPT-2-based voice
  assistant, including dataset preparation, model training, and usage. It is designed to be easy
