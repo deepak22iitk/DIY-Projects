@@ -12,6 +12,7 @@
  5. Usage
  6. Future Work
  7. License
+
 ** Project Overview**
  This project involves fine-tuning GPT-2, a pre-trained language model, on custom datasets.
  The model is trained to generate responses that could be used in a voice assistant
